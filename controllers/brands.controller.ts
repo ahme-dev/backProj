@@ -1,4 +1,3 @@
-import { knex } from "../db";
 import { brandSchema } from "../models/brands.model";
 import {
 	knexDelete,
@@ -67,11 +66,10 @@ export async function deleteBrand(req, res) {
 		return res.status(400).json({ message: "Invalid Brand Data" });
 
 	// try to find specified brand using id
-	const foundItem = await knex("brands").select("*").where("id", reqId);
+	const idExists = await knexExists("brands", reqId);
 
-	// if not found return error
-	if (foundItem.length === 0)
-		return res.status(404).json({ message: "Brand not found" });
+	// if it doesn't exist return error
+	if (!idExists) return res.status(404).json({ message: "Brand not found" });
 
 	// delete the data
 	await knexDelete("brands", reqId);
