@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-	addBrand,
+	insertBrand,
 	deleteBrand,
 	getAllBrands,
 	updateBrand,
@@ -9,6 +9,6 @@ import {
 export const brandsRouter = Router();
 
 brandsRouter.get("/", getAllBrands);
-brandsRouter.post("/", addBrand);
+brandsRouter.post("/", insertBrand);
 brandsRouter.patch("/:brandId", updateBrand);
 brandsRouter.delete("/:brandId", deleteBrand);
