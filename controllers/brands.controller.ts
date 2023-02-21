@@ -58,13 +58,6 @@ export async function deleteBrand(req, res) {
 	const reqData = req.body;
 	const reqId = req.params.brandId;
 
-	// validate the data
-	const validation = brandSchema.validate(reqData);
-
-	// if not valid return error
-	if (validation.error)
-		return res.status(400).json({ message: "Invalid Brand Data" });
-
 	// try to find specified brand using id
 	const idExists = await knexExists("brands", reqId);
 
