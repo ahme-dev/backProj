@@ -21,10 +21,8 @@ export async function addItem(req, res) {
 	if (validation.error)
 		return res.status(400).json({ message: "Invalid Item Data" });
 
-	// check if entered brand exists
+	// check if entered brand exists if not then return error
 	const brandExists = knexExists("brands", reqBody.brand_id);
-
-	// if the brand doesn't exist then return error
 	if (!brandExists)
 		return res.status(400).json({ message: "Item's brand does not exist" });
 
