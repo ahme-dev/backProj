@@ -1,9 +1,9 @@
 import express from "express";
 import { brandsRouter } from "./routers/brands.router";
 import { itemsRouter } from "./routers/items.router";
-import { itemsViewRouter } from "./routers/itemsview.router";
+import { itemsViewRouter } from "./routers/items.view";
 import { ordersRouter } from "./routers/orders.router";
-import { ordersViewRouter } from "./routers/ordersview.router";
+import { ordersViewRouter } from "./routers/orders.view";
 import { usersRouter } from "./routers/users.router";
 const app = express();
 

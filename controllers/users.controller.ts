@@ -5,7 +5,7 @@ import {
 	knexInsert,
 	knexSelectAll,
 	knexUpdate,
-} from "../models/utils.model";
+} from "../utils";
 
 export async function getAllUsers(req, res) {
 	const data = await knexSelectAll("users");
@@ -29,7 +29,7 @@ export async function insertUser(req, res) {
 
 export async function updateUser(req, res) {
 	const reqData = req.body;
-	const reqId = req.params.brandId;
+	const reqId = req.params.userId;
 
 	// validate the data and if failed then return error
 	const validation = userSchema.validate(reqData);
@@ -47,7 +47,7 @@ export async function updateUser(req, res) {
 }
 
 export async function deleteUser(req, res) {
-	const reqId = req.params.brandId;
+	const reqId = req.params.userId;
 
 	// try to find the user using id and return error if not found
 	const idExists = await knexExists("users", reqId);

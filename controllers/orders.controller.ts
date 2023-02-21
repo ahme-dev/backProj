@@ -5,7 +5,7 @@ import {
 	knexInsert,
 	knexSelectAll,
 	knexUpdate,
-} from "../models/utils.model";
+} from "../utils";
 
 export async function getAllOrders(req, res) {
 	let data = knexSelectAll("orders");
@@ -40,7 +40,7 @@ export async function addOrder(req, res) {
 
 export async function updateOrder(req, res) {
 	let reqBody = req.body;
-	let reqId = req.params.itemId;
+	let reqId = req.params.orderId;
 
 	// validate the data and if failed then return error
 	const validation = orderSchema.validate(reqBody);
@@ -59,7 +59,7 @@ export async function updateOrder(req, res) {
 }
 
 export async function deleteOrder(req, res) {
-	let reqId = req.params.itemId;
+	let reqId = req.params.orderId;
 
 	// try to find the order using id and return error if not found
 	const idExists = await knexExists("orders", reqId);

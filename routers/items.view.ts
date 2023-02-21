@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { knexSelectAll } from "../models/utils.model";
+import { knexSelectAll } from "../utils";
 
 export const itemsViewRouter = Router();
 

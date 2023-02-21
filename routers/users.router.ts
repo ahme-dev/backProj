@@ -11,4 +11,4 @@ export const usersRouter = Router();
 usersRouter.get("/", getAllUsers);
 usersRouter.post("/", insertUser);
 usersRouter.patch("/:userId", updateUser);
-usersRouter.delete("/:userID", deleteUser);
+usersRouter.delete("/:userId", deleteUser);

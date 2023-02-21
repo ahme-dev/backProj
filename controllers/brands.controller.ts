@@ -5,7 +5,7 @@ import {
 	knexInsert,
 	knexSelectAll,
 	knexUpdate,
-} from "../models/utils.model";
+} from "../utils";
 
 export async function getAllBrands(req, res) {
 	const data = await knexSelectAll("brands");

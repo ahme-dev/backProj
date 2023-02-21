@@ -1,4 +1,4 @@
-import { knex } from "../db";
+import { knex } from "./db";
 
 // get all rows in a table
 export async function knexSelectAll(tableName: string) {
