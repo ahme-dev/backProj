@@ -16,10 +16,8 @@ export async function getAllBrands(req, res) {
 export async function insertBrand(req, res) {
 	const reqData = req.body;
 
-	// validate the data
+	// validate the data and if failed then return error
 	const validation = brandSchema.validate(reqData);
-
-	// if not valid return error
 	if (validation.error)
 		return res.status(400).json({ message: "Invalid Brand Data" });
 
@@ -34,17 +32,13 @@ export async function updateBrand(req, res) {
 	const reqData = req.body;
 	const reqId = req.params.brandId;
 
-	// validate the data
+	// validate the data and if failed then return error
 	const validation = brandSchema.validate(reqData);
-
-	// if not valid return error
 	if (validation.error)
 		return res.status(400).json({ message: "Invalid Brand Data" });
 
-	// try to find specified brand using id
+	// try to find the brand using id and return error if not found
 	const idExists = await knexExists("brands", reqId);
-
-	// if it doesn't exist return error
 	if (!idExists) return res.status(404).json({ message: "Brand not found" });
 
 	// update the data
@@ -55,13 +49,10 @@ export async function updateBrand(req, res) {
 }
 
 export async function deleteBrand(req, res) {
-	const reqData = req.body;
 	const reqId = req.params.brandId;
 
-	// try to find specified brand using id
+	// try to find the brand using id and return error if not found
 	const idExists = await knexExists("brands", reqId);
-
-	// if it doesn't exist return error
 	if (!idExists) return res.status(404).json({ message: "Brand not found" });
 
 	// delete the data

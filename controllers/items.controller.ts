@@ -16,10 +16,8 @@ export async function getAllItems(req, res) {
 export async function addItem(req, res) {
 	let reqBody = req.body;
 
-	// validate the data
+	// validate the data and if failed then return error
 	const validation = itemSchema.validate(reqBody);
-
-	// if not valid then return error
 	if (validation.error)
 		return res.status(400).json({ message: "Invalid Item Data" });
 
@@ -41,12 +39,14 @@ export async function updateItem(req, res) {
 	let reqBody = req.body;
 	let reqId = req.params.itemId;
 
-	// validate the data
+	// validate the data and if failed then return error
 	const validation = itemSchema.validate(reqBody);
-
-	// if not valid then return error
 	if (validation.error)
 		return res.status(400).json({ message: "Invalid Item Data" });
+
+	// try to find the item using id and return error if not found
+	const idExists = await knexExists("items", reqId);
+	if (!idExists) return res.status(404).json({ message: "Item not found" });
 
 	// update the data
 	await knexUpdate("items", reqId, reqBody);
@@ -57,6 +57,10 @@ export async function updateItem(req, res) {
 
 export async function deleteItem(req, res) {
 	let reqId = req.params.itemId;
+
+	// try to find the item using id and return error if not found
+	const idExists = await knexExists("items", reqId);
+	if (!idExists) return res.status(404).json({ message: "Item not found" });
 
 	// delete the data
 	await knexDelete("items", reqId);
