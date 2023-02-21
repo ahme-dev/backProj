@@ -8,7 +8,7 @@ import {
 } from "../models/utils.model";
 
 export async function getAllUsers(req, res) {
-	const data = await knexSelectAll("brands");
+	const data = await knexSelectAll("users");
 
 	res.json(data);
 }
@@ -16,64 +16,45 @@ export async function getAllUsers(req, res) {
 export async function insertUser(req, res) {
 	const reqData = req.body;
 
-	// validate the data
+	// validate the data and if failed then return error
 	const validation = userSchema.validate(reqData);
-
-	// if not valid return error
 	if (validation.error)
-		return res.status(400).json({ message: "Invalid Brand Data" });
+		return res.status(400).json({ message: "Invalid User Data" });
 
 	// insert the data
-	await knexInsert("brands", reqData);
+	await knexInsert("users", reqData);
 
-	// send back the data
-	res.json({ message: "Brand inserted", data: reqData });
+	res.json({ message: "User inserted", data: reqData });
 }
 
 export async function updateUser(req, res) {
 	const reqData = req.body;
 	const reqId = req.params.brandId;
 
-	// validate the data
+	// validate the data and if failed then return error
 	const validation = userSchema.validate(reqData);
-
-	// if not valid return error
 	if (validation.error)
-		return res.status(400).json({ message: "Invalid Brand Data" });
+		return res.status(400).json({ message: "Invalid User Data" });
 
-	// try to find specified brand using id
-	const idExists = await knexExists("brands", reqId);
-
-	// if it doesn't exist return error
-	if (!idExists) return res.status(404).json({ message: "Brand not found" });
+	// try to find the user using id and return error if not found
+	const idExists = await knexExists("users", reqId);
+	if (!idExists) return res.status(404).json({ message: "User not found" });
 
 	// update the data
-	knexUpdate("brands", reqId, reqData);
+	knexUpdate("users", reqId, reqData);
 
-	// send back the data
-	res.json({ message: "Brand updated", data: reqData });
+	res.json({ message: "User updated", data: reqData });
 }
 
 export async function deleteUser(req, res) {
-	const reqData = req.body;
 	const reqId = req.params.brandId;
 
-	// validate the data
-	const validation = userSchema.validate(reqData);
-
-	// if not valid return error
-	if (validation.error)
-		return res.status(400).json({ message: "Invalid Brand Data" });
-
-	// try to find specified brand using id
-	const idExists = await knexExists("brands", reqId);
-
-	// if it doesn't exist return error
-	if (!idExists) return res.status(404).json({ message: "Brand not found" });
+	// try to find the user using id and return error if not found
+	const idExists = await knexExists("users", reqId);
+	if (!idExists) return res.status(404).json({ message: "User not found" });
 
 	// delete the data
-	await knexDelete("brands", reqId);
+	await knexDelete("users", reqId);
 
-	// send back the data
 	res.json({ message: "Brand deleted" });
 }
