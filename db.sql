@@ -23,7 +23,6 @@ create table items (
 	barcode varchar(255),
 	image_url varchar(255),
 	available_qty int,
-	book_id int not null,
 	brand_id int not null,
 	foreign key (brand_id) references brands(id),
 	primary key (id)
